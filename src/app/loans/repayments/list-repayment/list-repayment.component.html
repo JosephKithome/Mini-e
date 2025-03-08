@@ -1,0 +1,64 @@
+<div class="button-row">
+  <a mat-mini-fab routerLink="/app-home" class="right">
+    <mat-icon>arrow_back</mat-icon>
+  </a>
+</div>
+
+<div class="button-row">
+  <h2>Repayments</h2>
+</div>
+
+<div class="new-button">
+  <button mat-raised-button routerLink="/create-repayment" color="primary">
+    Add Repayment
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<mat-form-field appearance="fill">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="" #input />
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" matSort>
+
+  <!-- Dynamic Columns (excluding "action") -->
+  <ng-container *ngFor="let column of displayedColumns">
+    <ng-container *ngIf="column !== 'action'">
+      <ng-container [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ column | titlecase }}
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row[column] }}</td>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let row">
+      <button mat-icon-button (click)="editRepayment(row)">
+        ✏️
+      </button>
+      <button mat-icon-button (click)="deleteRepayment(row)">
+        🗑️
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Table Header and Rows -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  <!-- No Data Row -->
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+      No data matching the filter "{{ input.value }}"
+    </td>
+  </tr>
+
+</table>
+
+<!-- Paginator -->
+<mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page"></mat-paginator>

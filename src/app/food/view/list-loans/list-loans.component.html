@@ -1,0 +1,102 @@
+<div class="search-container">
+  <mat-form-field appearance="fill" class="search-form-field">
+    <mat-icon matPrefix>search</mat-icon> 
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search Loan" #input />
+  </mat-form-field>
+  <!-- // New User button -->
+<div class="new-button">
+  <button mat-raised-button routerLink="/new-user" color="primary">
+    New Loan
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+</div>
+
+<div class="search-container">
+  <mat-form-field appearance="fill">
+    <mat-label>From Date</mat-label>
+    <input matInput [matDatepicker]="fromPicker">
+    <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+    <mat-datepicker #fromPicker></mat-datepicker>
+  </mat-form-field>
+  
+  <mat-form-field appearance="fill">
+    <mat-label>To Date</mat-label>
+    <input matInput [matDatepicker]="toPicker">
+    <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+    <mat-datepicker #toPicker></mat-datepicker>
+  </mat-form-field>
+  
+</div>
+
+
+
+<div class="food-container">
+  <mat-card class="food-card" *ngFor="let loan of dataSource.filteredData">
+    <mat-card-header>
+      <mat-card-title>{{ loan.username }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p *ngIf="!loan.showMore">
+        {{ loan.description | slice: 0:50 }}...
+        <button mat-button color="accent" (click)="loan.showMore = !loan.showMore">
+          Show More
+        </button>
+      </p>
+
+      <p *ngIf="loan.showMore">
+        {{ loan.description }}
+        <button mat-button color="accent" (click)="loan.showMore = !loan.showMore">
+          Show Less
+        </button>
+      </p>
+      <p><strong>Account:</strong>  {{ loan.loanAccount }}</p>
+      <p><strong>Amount:</strong> Kes {{ loan.amount }}</p>
+      <p><strong>To Pay:</strong> Kes {{ loan.amountToBePaid }}</p>
+      <p><strong>Interest:</strong> {{ loan.interestRate }}</p>
+      <p><strong>Duration:</strong> {{ loan.durationMonths }}</p>
+      <p>
+        <strong>Status:</strong> 
+        <span [ngClass]="getStatusClass(loan.status)">
+          {{ loan.status }}
+        </span>
+      </p>
+      
+      <p><strong>Created At:</strong> {{ loan.createdAt | date: 'short' }}</p>
+      <p><strong>Issued On:</strong> {{ loan.issuedAt | date: 'short' }}</p>
+      <p><strong>Due Date:</strong> {{ loan.dueDate | date: 'short' }}</p>
+    </mat-card-content>
+
+    <!-- Ellipsis menu positioned at bottom-right -->
+    <mat-card-actions class="menu-container">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>  <!-- Ellipsis menu (three dots) -->
+      </button>
+      <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="approveLoan(loan)">
+            ✅ Approve
+          </button>
+          <button mat-menu-item (click)="rejectLoan(loan)">
+            ❌ Reject
+          </button>
+          <button mat-menu-item (click)="defaultedLoan(loan)">
+            ⚠️ Defaulted
+          </button>
+          <button mat-menu-item (click)="completeLoan(loan)">
+            🎉 Completed
+          </button>
+        
+          <button mat-menu-item (click)="openDialog(loan,loan.username)">
+            📊 View Amortization Schedule
+          </button>
+          <button mat-menu-item (click)="openDialog(loan,loan.username)">
+            💰 View Repayment Details
+          </button>
+        </mat-menu>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>

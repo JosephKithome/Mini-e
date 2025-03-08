@@ -1,0 +1,102 @@
+<div class="col-md-12 cardUser">
+  <div class="form-container">
+    <h2 class="heading">New Loan Application</h2>
+    <div class="col-md-12 row">
+      <div class="col-md-6">
+        <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Select Borrower</mat-label>
+          <mat-select
+            [(ngModel)]="selectedUser"
+            (selectionChange)="onUserSelect($event)"
+          >
+            <mat-option
+              *ngFor="let user of dataSource?.data || []"
+              [value]="user"
+            >
+              {{ user.username }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Show message if there are no users -->
+      <p *ngIf="!dataSource?.data?.length">No borrowers available</p>
+
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>Amount Borrowed</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="20000"
+            [(ngModel)]="loan.amount"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>Interest Rate(%) as per Market</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="10%"
+            [(ngModel)]="loan.interestRate"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>Duration (Months)</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="1"
+            [(ngModel)]="loan.durationMonths"
+          />
+        </mat-form-field>
+      </div>
+     
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>Description</mat-label>
+          <textarea
+            matInput
+            placeholder="Enter description"
+            [(ngModel)]="loan.description"
+          ></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Issue Date</mat-label>
+          <input matInput [matDatepicker]="toPicker" [(ngModel)]="loan.issuedAt"/>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="toPicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #toPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-divider></mat-divider>
+        <section>
+          <div class="example-button-row">
+            <button mat-raised-button color="primary" (click)="submitLoan()">
+              Save
+            </button>
+            <button mat-raised-button color="warn">
+              Cancel <mat-icon>arrow_back</mat-icon>
+            </button>
+          </div>
+        </section>
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- //GAGGE -->

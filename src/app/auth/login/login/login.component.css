@@ -1,0 +1,99 @@
+/* General card styling */
+.login-card {
+    max-width: 400px;
+    margin: 2em auto;
+    text-align: center;
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+  }
+  
+  /* App name styling */
+  .app-name {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #ff5722; /* Use your brand color */
+    margin-bottom: 1em;
+  }
+  
+  /* Login title styling */
+  .login-title {
+    font-size: 1.5em;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 1.5em;
+  }
+  
+  /* Form field styling */
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 1.5em;
+  }
+  
+  /* Input field styling */
+  mat-form-field .mat-input-element {
+    font-size: 1em;
+  }
+  
+  /* Button styling */
+  .btn-lg {
+    font-size: 1.1em;
+    padding: 0.5em 1.5em;
+    border-radius: 25px;
+    background-color: #ff5722; /* Use your brand color */
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-lg:hover {
+    background-color: #e64a19; /* Darker shade for hover */
+  }
+  
+  /* Forgot password link styling */
+  .forgot-password a {
+    color: #ff5722; /* Use your brand color */
+    text-decoration: none;
+    font-size: 0.9em;
+  }
+  
+  .forgot-password a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Create account link styling */
+  .create-account p {
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  .create-account a {
+    color: #ff5722; /* Use your brand color */
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .create-account a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Password visibility toggle button */
+  mat-icon-button {
+    color: #666;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .login-card {
+      margin: 1em;
+      padding: 1.5em;
+    }
+  
+    .app-name {
+      font-size: 2em;
+    }
+  
+    .login-title {
+      font-size: 1.3em;
+    }
+  }

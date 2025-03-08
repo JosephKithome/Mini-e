@@ -1,0 +1,49 @@
+<mat-card class="login-card">
+  <mat-card-content>
+    <h1 class="app-name">MiniEcom</h1>
+    <form>
+      <h2 class="login-title">Sign In</h2>
+
+      <mat-form-field class="full-width-input">
+        <mat-label>Email/Phone</mat-label>
+        <input matInput placeholder="Email" name="email" [(ngModel)]="user.email" required />
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          name="password"
+          [type]="hidePassword ? 'password' : 'text'"
+          placeholder="Password"
+          [(ngModel)]="user.password"
+          required
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="togglePasswordVisibility()"
+          type="button"
+          aria-label="Toggle password visibility"
+        >
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div class="actions">
+        <div class="forgot-password">
+          <a routerLink="/forgot-password">Forgot Password?</a>
+        </div>
+        <button class="btn-lg" mat-raised-button color="primary" (click)="signIn()">
+          Login <mat-icon>lock_open</mat-icon>
+        </button>
+      </div>
+
+      <div class="create-account">
+        <p>Don't have an account? 
+          <a (click)="navigate()">Create Account</a>
+        </p>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

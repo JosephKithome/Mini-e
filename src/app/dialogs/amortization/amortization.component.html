@@ -1,0 +1,61 @@
+<div #pdfContent class="loan-container">
+  <!-- Close Button (Far Right Top) -->
+  <button class="close-btn no-print" (click)="closeDialog()">✖</button>
+
+  <!-- Header Section -->
+  <div class="header-section">
+    <p></p>
+    <div class="company-details">
+      <h2>Jipush Loans Group</h2>
+      <p>Address: 123 Business Street, Nairobi, Kenya</p>
+      <p>Email: info@jipush.com | Phone: +254 700 000 000</p>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Due Date</th>
+        <th>Principal at Start</th>
+        <th>Interest</th>
+        <th>Rate</th>
+        <th>Total Due</th>
+        <th>Payment Made</th>
+        <th>New Principal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of amortizationSchedule; let i = index">
+        <td *ngIf="!loadingItems[i]">{{ row.month }}</td>
+        <td *ngIf="!loadingItems[i]">{{ row.dueDate | date }}</td>
+        <td *ngIf="!loadingItems[i]">{{ row.principalAtStart | currency : 'Ksh' }}</td>
+        <td *ngIf="!loadingItems[i]">{{ row.interest | currency : 'Ksh' }}</td>
+        <td *ngIf="!loadingItems[i]">{{ row.interestRate }}%</td>
+        <td *ngIf="!loadingItems[i]">{{ row.totalDue | currency : 'Ksh' }}</td>
+        <td *ngIf="!loadingItems[i]">{{ row.paymentMade | currency : 'Ksh' }}</td>
+        <td *ngIf="!loadingItems[i]">{{ row.newPrincipal | currency : 'Ksh' }}</td>
+
+        <!-- Shimmer row -->
+        <td class="shimmer-row" *ngIf="loadingItems[i]" colspan="8"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Summary Section -->
+  <div class="summary-section">
+    <p><strong>Total Interest:</strong> {{ getTotalInterest() | currency : 'Ksh' }}</p>
+    <p><strong>Total Principal Paid:</strong> {{ getTotalPrincipal() | currency : 'Ksh' }}</p>
+  </div>
+
+  <!-- Styled Signature Section -->
+  <div class="signature-section">
+    <p><strong>Name:</strong> <span class="underline">{{ user.username }}</span></p>
+    <p><strong>Signature:</strong> ________________________________________</p>
+    <p><strong>Date:</strong> _____________________________________________</p>
+  </div>
+</div>
+
+<button class="no-print" (click)="downloadPDF()">Download PDF</button>
+
+

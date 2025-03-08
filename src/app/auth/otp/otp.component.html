@@ -1,0 +1,64 @@
+<mat-card class="otp-card">
+    <mat-card-content>
+      <h1 class="app-name">Jipush Loans</h1>
+      <h2 class="otp-title">Enter the OTP Code Sent to Your Email</h2>
+  
+      <form>
+        <div class="otp-container">
+          <input
+            class="otp-input"
+            type="text"
+            maxlength="1"
+            [(ngModel)]="otp[0]"
+            name="otp1"
+            #otp1
+            (keyup)="moveFocus(otp1, otp2)"
+          />
+          <input
+            class="otp-input"
+            type="text"
+            maxlength="1"
+            [(ngModel)]="otp[1]"
+            name="otp2"
+            #otp2
+            (keyup)="moveFocus(otp2, otp3)"
+            (keydown.backspace)="moveFocus(otp2, otp1, true)"
+          />
+          <input
+            class="otp-input"
+            type="text"
+            maxlength="1"
+            [(ngModel)]="otp[2]"
+            name="otp3"
+            #otp3
+            (keyup)="moveFocus(otp3, otp4)"
+            (keydown.backspace)="moveFocus(otp3, otp2, true)"
+          />
+          <input
+            class="otp-input"
+            type="text"
+            maxlength="1"
+            [(ngModel)]="otp[3]"
+            name="otp4"
+            #otp4
+            (keydown.backspace)="moveFocus(otp4, otp3, true)"
+          />
+        </div>
+  
+        <div class="timer">
+          <p *ngIf="countdown > 0">Resend OTP in {{ countdown }}s</p>
+          <p *ngIf="countdown === 0">
+            Didn't receive the code?
+            <a (click)="resendOtp()" [class.disabled]="countdown > 0">Resend OTP</a>
+          </p>
+        </div>
+  
+        <div class="actions">
+          <button class="btn-lg" mat-raised-button color="primary" (click)="verifyOtp()">
+            Verify OTP
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

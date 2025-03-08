@@ -1,0 +1,76 @@
+<div class="col-md-12 cardUser">
+    <div class="form-container">
+      <h2 class="heading">Add Loan Repayment</h2>
+      <div class="col-md-12 row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="example-full-width">
+              <mat-label>Select Loan</mat-label>
+              <mat-select [(ngModel)]="selectedUser" (selectionChange)="onUserSelect($event)">
+                <mat-option *ngFor="let loan of dataSource?.data || []" [value]="loan">
+                  {{ loan.username }} - {{ loan.loanAccount }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>          
+  
+        <!-- Show message if there are no users -->
+        <p *ngIf="!dataSource?.data?.length">No borrowers available</p>
+  
+        <div class="col-md-6">
+          <mat-form-field class="example-full-width">
+            <mat-label>Amount Paid</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="20000"
+              [(ngModel)]="repayment.amount"
+            />
+          </mat-form-field>
+        </div>
+  
+        <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Payment Mode</mat-label>
+              <mat-select [(ngModel)]="repayment.paymentMode">
+                <mat-option *ngFor="let mode of paymentModes" [value]="mode">
+                  {{ mode }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          
+
+
+  
+        <div class="col-md-6">
+          <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>Payment Date</mat-label>
+            <input matInput [matDatepicker]="toPicker" [(ngModel)]="repayment.paymentDate"/>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="toPicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #toPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+  
+        <div class="col-md-6">
+          <mat-divider></mat-divider>
+          <section>
+            <div class="example-button-row">
+              <button mat-raised-button color="primary" (click)="submitRepayment()">
+                Save
+              </button>
+              <button mat-raised-button color="warn">
+                Cancel <mat-icon>arrow_back</mat-icon>
+              </button>
+            </div>
+          </section>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- //GAGGE -->
+  

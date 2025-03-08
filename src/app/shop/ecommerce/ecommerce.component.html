@@ -1,0 +1,162 @@
+<div class="container-fluid ecommerce-container">
+    <!-- Search Bar -->
+    <div class="row justify-content-center mb-4">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" class="search-bar">
+          <mat-label>Search for products...</mat-label>
+          <input matInput [(ngModel)]="searchQuery" />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div class="row">
+      <!-- Filters Column -->
+      <div class="col-lg-3">
+        <mat-card class="filters">
+          <mat-card-title>Filter By</mat-card-title>
+          <mat-card-content>
+            <h6>Categories</h6>
+            <mat-list>
+              <mat-list-item
+                *ngFor="let category of categories"
+                [class.active]="selectedCategory === category"
+                (click)="selectCategory(category)"
+              >
+                {{ category }}
+              </mat-list-item>
+            </mat-list>
+            <h6>Price Range</h6>
+            <mat-slider
+              min="0"
+              max="5000"
+              step="100"
+              [(ngModel)]="priceRange"
+            ></mat-slider>
+            <p class="price-label">Up to Ksh {{ priceRange }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+  
+      <!-- Product Grid -->
+      <div class="col-lg-6">
+        <div class="row">
+          <div
+            class="col-md-6 col-lg-4 mb-4"
+            *ngFor="let product of filteredProducts"
+          >
+            <mat-card class="product-card">
+              <div class="card-img-container">
+                <img
+                  mat-card-image
+                  [src]="product.image"
+                  [alt]="product.name"
+                  class="product-img"
+                />
+              </div>
+              <mat-card-header>
+                <mat-card-title>{{ product.name }}</mat-card-title>
+                <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p class="product-price">Ksh {{ product.price }}</p>
+              </mat-card-content>
+              <mat-card-actions align="end" class="quantity-control">
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="decreaseQuantity(product)"
+                >
+                  <mat-icon>remove</mat-icon>
+                </button>
+                <input
+                  type="number"
+                  [(ngModel)]="product.quantity"
+                  (change)="updateCart(product, product.quantity)"
+                  class="quantity-input"
+                />
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="increaseQuantity(product)"
+                >
+                  <mat-icon>add</mat-icon>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Cart Column -->
+      <div class="col-lg-3">
+        <mat-card class="cart-summary">
+          <mat-card-title>Shopping Cart</mat-card-title>
+          <mat-card-content *ngIf="cart.length > 0; else emptyCart">
+            <div class="cart-items-container">
+              <mat-list>
+                <mat-list-item *ngFor="let item of cart">
+                  <div class="cart-item">
+                    <!-- Item Image -->
+                    <img
+                      [src]="item.image"
+                      [alt]="item.name"
+                      class="cart-item-img"
+                    />
+                    <!-- Item Details -->
+                    <div class="cart-item-details">
+                      <span class="cart-item-name">{{ item.name }}</span>
+                      <p class="cart-item-price">Ksh {{ item.price }}</p>
+                      <!-- Quantity Controls -->
+                      <div class="cart-quantity-control">
+                        <button
+                          mat-icon-button
+                          color="warn"
+                          (click)="decreaseQuantity(item)"
+                        >
+                          <mat-icon>remove</mat-icon>
+                        </button>
+                        <input
+                          type="number"
+                          [(ngModel)]="item.quantity"
+                          (change)="updateCart(item, item.quantity)"
+                          class="quantity-input"
+                        />
+                        <button
+                          mat-icon-button
+                          color="primary"
+                          (click)="increaseQuantity(item)"
+                        >
+                          <mat-icon>add</mat-icon>
+                        </button>
+                      </div>
+                      <!-- Item Total -->
+                      <p class="cart-item-total">Total: Ksh {{ item.price * item.quantity }}</p>
+                    </div>
+                    <!-- Delete Button -->
+                    <button
+                      mat-icon-button
+                      color="warn"
+                      (click)="updateCart(item, 0)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </div>
+            <!-- Grand Total -->
+            <p class="cart-total">Grand Total: Ksh {{ getCartTotal() }}</p>
+            <!-- Checkout Button -->
+            <button mat-flat-button color="accent" class="checkout-btn">
+              <mat-icon>shopping_cart</mat-icon> Proceed to Checkout
+            </button>
+          </mat-card-content>
+          <!-- Empty Cart Message -->
+          <ng-template #emptyCart>
+            <p class="empty-cart-message">Your cart is empty.</p>
+          </ng-template>
+        </mat-card>
+      </div>
+    </div>
+  </div>
