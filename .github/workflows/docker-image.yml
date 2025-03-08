@@ -1,18 +1,14 @@
-name: Docker Image CI
+# Use Nginx as the base image
+FROM nginx:alpine
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+# Copy the Angular dist folder (adjust if needed)
+COPY dist/jipushloansfrontend/ /usr/share/nginx/html
 
-jobs:
+# Copy custom Nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-  build:
+# Expose port 80
+EXPOSE 80
 
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
